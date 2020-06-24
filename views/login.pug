@@ -1,0 +1,13 @@
+extends layout
+
+block content
+   h1= title
+
+   form(method="post")
+      div
+         input(type="text" name='login')
+      div
+         input(type="password" name='password')
+      div
+         button(type="submit") Zaloguj
+

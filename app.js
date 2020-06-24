@@ -1,8 +1,11 @@
 var createError = require('http-errors');
+const cookieSession = require('cookie-session')
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+const config = require('./config')
 
 var indexRouter = require('./routes/index');
 var newsRouter = require('./routes/news');
@@ -22,6 +25,12 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieSession({ // metoda pobrana z biblioteki cookie-session
+  name: 'session',
+  keys: config.keySession,
+  // cookie options
+  maxAge: config.maxAgeSession
+}))
 
 app.use((req, res, next) => { // deklarujemy wartość path w obiekcie local żeby później użyć tego w templatce pug
   res.locals.path = req.path
