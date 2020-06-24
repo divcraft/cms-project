@@ -1,5 +1,8 @@
 const express = require('express')
 const News = require('../models/news')
+const {
+   isValidObjectId
+} = require('mongoose')
 
 const router = express.Router()
 
@@ -14,37 +17,55 @@ router.all('*', (req, res, next) => {
    next()
 })
 
-router.get('/', (req, res, next) => {
-   // const newsData = new News({
-   //    title: 'Tytuł testowy',
-   //    description: 'Opis testowy'
-   // })
-   // newsData.save((err) => {
-   //    if (err) {
-   //       console.log(err)
-   //    } else {
-   //       console.log('Połączono z kolekcją News')
-   //    }
-   // })
-   res.render('admin/index', {
-      title: 'Admin'
+router.get('/', (req, res) => {
+   News.find({}, (err, data) => {
+      res.render('admin/index', {
+         title: 'Admin',
+         data
+      });
    })
 })
 
-router.get('/news/add', (req, res) => {
+router.get('/add-news', (req, res) => {
    res.render('admin/news-form', {
       title: 'Dodaj news'
    })
 })
 
-router.post('/news/add', (req, res) => {
+router.post('/add-news', (req, res) => {
    const {
       newsTitle,
       newsDescription
    } = req.body
-   console.log(newsTitle)
-   console.log(newsDescription)
-   res.redirect('/admin/news/add')
+
+   const newsData = new News({
+      title: newsTitle,
+      description: newsDescription
+   })
+   const errors = newsData.validateSync()
+
+   newsData.save((err) => {
+      if (err) {
+         console.log('Nie można dodać artykułu, wystąpił błąd')
+         res.render('admin/news-form', {
+            title: 'Dodaj news',
+            errors
+         })
+      } else {
+         console.log(`Dodano artykuł o tytule '${newsTitle}'`)
+         res.redirect('/news')
+      }
+   })
+})
+
+router.get('/remove-news/:id', (req, res) => {
+   const {
+      id
+   } = req.params
+   News.findByIdAndDelete(id, (err) => {
+      console.log('Usunięto artykuł o ID:', id)
+      res.redirect('/admin')
+   })
 })
 
 module.exports = router

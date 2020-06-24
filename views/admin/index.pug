@@ -3,3 +3,22 @@ extends ../layout
 block content
   h1= title
   p Welcome to #{title}
+
+  a(href="/admin/add-news") Dodaj artykuł
+
+  h2 Lista artykułów:
+  table
+    tr
+      th id
+      th Tytuł
+      th Opis
+      th akcja
+    each item, index in data
+      tr
+        td= index
+        td= item.title
+        td= item.description
+        td= item.date
+        td
+          a(href=`/admin/remove-news/${item._id}`) usuń
+        

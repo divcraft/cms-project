@@ -12,3 +12,10 @@ block content
             textarea(name="newsDescription", cols="30", rows="10")
       div
          button(type="submit") Zapisz
+   
+   if errors !== undefined
+      each message in errors.errors
+         p=message
+   
+   if isSent == true
+      p Artykuł został dodany pomyślnie

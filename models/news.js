@@ -4,11 +4,11 @@ const Schema = mongoose.Schema
 const newSchema = new Schema({
    title: {
       type: String,
-      required: true
+      required: [true, `Pole 'Tytuł' jest wymagane`]
    },
    description: {
       type: String,
-      required: true
+      required: [true, `Pole 'Opis' jest wymagane`]
    },
    date: {
       type: Date,
