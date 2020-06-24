@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 const config = require('./config')
+const database = require('./mongoose')
+database()
 
 var indexRouter = require('./routes/index');
 var newsRouter = require('./routes/news');
