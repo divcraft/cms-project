@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  h1= title
+
+   form(method="post")
+      div
+         label(for="news-title") Tytuł:
+            input(type="text" name='newsTitle')
+      div
+         label(for="news-description") Opis:
+            textarea(name="newsDescription", cols="30", rows="10")
+      div
+         button(type="submit") Zapisz
