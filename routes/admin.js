@@ -1,8 +1,5 @@
 const express = require('express')
 const News = require('../models/news')
-const {
-   isValidObjectId
-} = require('mongoose')
 
 const router = express.Router()
 
