@@ -3,3 +3,14 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  form(method="get")
+    input(type="text", name="search", value=search)
+    button(type="submit") Szukaj
+
+  each item in data
+    hr
+    article
+      h2=item.title
+      p=item.description
+      p=item.date
